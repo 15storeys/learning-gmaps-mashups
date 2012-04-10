@@ -5,8 +5,7 @@ function twitterCallback2(twitters) {
     var status = twitters[i].text.replace(/((https?|s?ftp|ssh)\:\/\/[^"\s\<\>]*[^.,;'">\:\s\<\>\)\]\!])/g, function(url) {
       return '<a href="'+url+'">'+url+'</a>';
     }).replace(/\B@([_a-z0-9]+)/ig, function(reply) {
-      alert ('reply ' + reply);
-      return  /* reply.charAt(0)+ */ '<a href="http://twitter.com/'+reply.substring(1)+'">'+reply.substring(0)+'</a>';
+      return '<a href="http://twitter.com/'+reply.substring(1)+'">'+reply.substring(0)+'</a>';
     });
    status = status.replace(/[#]+[A-Za-z0-9-_]+/g, function(t) {
 		var tag = t.replace("#","%23")

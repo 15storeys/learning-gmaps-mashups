@@ -3,9 +3,10 @@ var o = {
 	init: function(){
 		// in this place we call all needed functions
 		this.map.init();
+		this.northdowns.addDayMarkers();
 	}, // end o.init
 	
-	twitter: {
+/*	twitter: {
 		getTwitterUser: function() {
 			var users = o.twitter.getEnteredUser();
 			o.twitter.rate_limit_status_callback(function(remaining) {
@@ -155,7 +156,7 @@ var o = {
 		
 	}, // end of o.twitter
 
-
+*/
 	
 	map: {
 		size: function(){
@@ -165,8 +166,8 @@ var o = {
 		},
 		
 		data: {
-			zoom: 3,
-			center: new google.maps.LatLng(52, 23),
+			zoom: 9,
+			center: new google.maps.LatLng(51.263216,-0.078143),
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		},
 		
@@ -176,8 +177,7 @@ var o = {
 			map = new google.maps.Map(document.getElementById('map'), o.map.data),
 			geocoder = new google.maps.Geocoder();
 			google.maps.event.addListener(map, 'dragstart', function(){
-				$('.posts').hide();
-			o.northdowns.addDayMarkers();
+				$('.posts').hide(); 
 			});
 			
 			
@@ -186,21 +186,51 @@ var o = {
 
 	northdowns: {
 		addDayMarkers: function (){
-			var myLatlng0 = new google.maps.LatLng(51.211742,-0.79241);
-			var myLatlng1 = new google.maps.LatLng(51.224528,-0.577244);
-			var myLatlng2 = new google.maps.LatLng(51.248925,-0.324515);
-			var marker0 = new google.maps.Marker({
-				position: myLatlng0, map: map, title:"Hello World!"
-			});
-			var marker1 = new google.maps.Marker({
-				position: myLatlng1, map: map, title:"Hello World!"
-			});
-			var marker2 = new google.maps.Marker({
-							position: myLatlng2, map: map, title:"Hello World!"
-			});
+		
+			var dayMarkers = [
+				[51.211742,-0.79241, 0, 'Farnham', 'visited'],
+				[51.224528,-0.577244, 1, 'Guildford','visited'],
+				[51.248925,-0.324515, 2, 'Dorking','visited'],
+				[51.263216,-0.078143, 3, 'Caterham','visited'],
+				[51.313125,0.19666, 4, 'Otford','visited'],
+				[51.373836,0.462005, 5, 'Cuxton', 'notvisited'],
+				[51.265057,0.627851, 6, 'Hollingbourne', 'notvisited'],
+				[51.185288,0.929246, 7, 'Wye', 'notvisited'],
+				[51.081397,1.169456, 8, 'Folkestone', 'notvisited'],
+				[51.126371,1.316198, 9, 'Dover', 'notvisited'],
+				[51.280233,1.078909, 10, 'Canterbury','notvisited'],
+				[51.186392,1.229855, 11, 'Shepherdswell','notvisited']
+			];
+			
+			// Create our "tiny" marker icon
+			//var blueIcon = new GIcon(G_DEFAULT_ICON);
+			//blueIcon.image = "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png";
+			                
+			// Set up our GMarkerOptions object
+			//markerOptions = { icon:blueIcon };
+
+
+			for (i = 0; i < dayMarkers.length; i++) {
+				var dayMarker = dayMarkers [i]
+				var myLatlng = new google.maps.LatLng(dayMarker[0], dayMarker[1]);
+				// red marker if visited, blue if yet to visit
+				if (dayMarker[4] == 'visited'){
+					var marker = new google.maps.Marker({
+						position: myLatlng, 
+						map: map, 
+						title: dayMarker[3]});	
+				}
+				else {
+					var marker = new google.maps.Marker({
+						position: myLatlng, 
+						map: map, 
+						title: dayMarker[3],
+						icon: "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png"});	
+				}
+			} 
+			
 		} // end o.northdowns.addDayMarkers
 	}  // end o.northdowns
 	
 } // end o
 $(function(){ o.init(); });
-
