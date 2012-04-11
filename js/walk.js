@@ -4,6 +4,7 @@ var o = {
 		// in this place we call all needed functions
 		this.map.init();
 		this.northdowns.addDayMarkers();
+		this.northdowns.addRoute();
 	}, // end o.init
 	
 /*	twitter: {
@@ -202,13 +203,6 @@ var o = {
 				[51.186392,1.229855, 11, 'Shepherdswell','notvisited']
 			];
 			
-			// Create our "tiny" marker icon
-			//var blueIcon = new GIcon(G_DEFAULT_ICON);
-			//blueIcon.image = "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png";
-			                
-			// Set up our GMarkerOptions object
-			//markerOptions = { icon:blueIcon };
-
 
 			for (i = 0; i < dayMarkers.length; i++) {
 				var dayMarker = dayMarkers [i]
@@ -229,8 +223,51 @@ var o = {
 				}
 			} 
 			
-		} // end o.northdowns.addDayMarkers
+		}, // end o.northdowns.addDayMarkers
+		
+		addRoute: function() {
+		
+			$.ajax({
+			    type: "GET",
+			    url: "data/RK_gpx _2012-04-08_0905.gpx",
+			    dataType: "xml",
+			    success: this.plotRouteFromGpx,
+			    error: function(xmlReq, status, errorMsg){
+				console.log("Error Message: "+ errorMsg);
+				console.log("Status: "+ status);
+				console.log(xmlReq.responseText);
+
+				throw(errorMsg);
+			    }
+  			}); 
+  			
+			
+		}, // end o.northdowns.addRoute
+		
+		plotRouteFromGpx: function(xml) {
+
+			var coordinates = [];
+
+			// Loop through co-ords in GPX and plot onto map
+			$(xml).find("trkpt").each(function()
+			{
+				coordinates.push(new google.maps.LatLng($(this).attr("lat"), $(this).attr("lon")));
+			});
+		
+			  var route = new google.maps.Polyline({
+			    path: coordinates,
+			    strokeColor: "#FF0000",
+			    strokeOpacity: 1.0,
+			    strokeWeight: 2
+			  });
+
+			  route.setMap(map);
+		} // end o.northdowns.plotRouteFromGpx
+		
 	}  // end o.northdowns
 	
 } // end o
-$(function(){ o.init(); });
+
+$(document).ready(function () {
+  o.init();
+});
