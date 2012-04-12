@@ -4,7 +4,7 @@ var o = {
 		// in this place we call all needed functions
 		this.map.init();
 		this.northdowns.addDayMarkers();
-		this.northdowns.addRoute();
+		this.northdowns.addRoutes();
 	}, // end o.init
 	
 /*	twitter: {
@@ -225,11 +225,21 @@ var o = {
 			
 		}, // end o.northdowns.addDayMarkers
 		
-		addRoute: function() {
+		addRoutes: function() {
+			var gpxRoutes = ["data/RK_gpx _2011-11-26_1039.gpx",
+					"data/RK_gpx _2012-03-24_0955.gpx",
+					"data/RK_gpx _2012-03-31_0921.gpx",
+					"data/RK_gpx _2012-04-08_0905.gpx"];
 		
-			$.ajax({
+			for (i = 0; i < gpxRoutes.length; i++) {
+				this.addRoute(gpxRoutes[i]);
+			}
+		},
+		
+		addRoute: function(filename) {
+			 $.ajax({
 			    type: "GET",
-			    url: "data/RK_gpx _2012-04-08_0905.gpx",
+			    url: filename,
 			    dataType: "xml",
 			    success: this.plotRouteFromGpx,
 			    error: function(xmlReq, status, errorMsg){
@@ -258,7 +268,7 @@ var o = {
 			    path: coordinates,
 			    strokeColor: "#FF0000",
 			    strokeOpacity: 1.0,
-			    strokeWeight: 2
+			    strokeWeight: 3
 			  });
 
 			  route.setMap(map);
