@@ -60,49 +60,20 @@ var o = {
 					//entry.media:group.thumbnail(s)
 				});
 		
-				// hold onto first photo and loop through polyline looking for match.
-				// once found output photo on map
-				// then increment to next photo and continue along line
+				// Determine location on route for each photo that isn't geotagged
 				var routePoint = 0;
 				for(i = 0; i < photos.length; i++)
 				{
 					var photo = photos[i];
-					var photoPlaced = 'false';
 					photoTime = photo[1];
 
-					photoTime = photoTime - 2000000
+					photoTime = photoTime - 2000000 // TODO: camera time seems to be out.  Make this configurable later...
 					
 					// look for photo time value in full route array
 					var latlong = [];
 					latlong = o.picasa.binarySearch(photoTime);
 					console.log('lat: ' + latlong[0]);
 					console.log('lon: ' + latlong[1]);
-					
-					/* while(photoPlaced == 'false' && routePoint < fullroute.length) {
-						
-						if (i>5)
-						{
-							console.log ('debug');
-						}
-						var gpx = fullroute[routePoint];
-						var nextgpx = fullroute[routePoint+1];
-						
-						pointTime = o.picasa.unixtime(gpx[2]);
-						nextPointTime = o.picasa.unixtime(nextgpx[2]);
-						
-						if (photoTime > pointTime && photoTime <= nextPointTime) {
-							photoPlaced='true';
-							console.log('photo: ' + i);
-							console.log('lat: ' + gpx[0]);
-							console.log('lon: ' + gpx[1]);
-							console.log('url: ' + photo[0]);
-							console.log('caption: ' + photo[2]);
-							
-							//if photofound, don't advance on the line, as there may be more here
-							routePoint--;
-						}
-						routePoint++;
-					} */
 				}
 				
 			});
