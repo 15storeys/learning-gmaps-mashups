@@ -6,7 +6,7 @@ var o = {
 		this.northdowns.addDayMarkers();
 		var route = this.northdowns.addRoutes();
 		$.when(route).then(
-		    function(){ o.picasa.getAlbum('NorthDownsWay'); }
+		   // function(){ o.picasa.getAlbum('NorthDownsWay'); }
 		);
 	}, // end o.init
 	
@@ -121,7 +121,7 @@ var o = {
 				[51.248925,-0.324515, 2, 'Dorking','visited'],
 				[51.263216,-0.078143, 3, 'Caterham','visited'],
 				[51.313125,0.19666, 4, 'Otford','visited'],
-				[51.373836,0.462005, 5, 'Cuxton', 'notvisited'],
+				[51.373836,0.462005, 5, 'Cuxton', 'visited'],
 				[51.265057,0.627851, 6, 'Hollingbourne', 'notvisited'],
 				[51.185288,0.929246, 7, 'Wye', 'notvisited'],
 				[51.081397,1.169456, 8, 'Folkestone', 'notvisited'],
@@ -156,7 +156,8 @@ var o = {
 			var gpxRoutes = ["data/RK_gpx _2011-11-26_1039.gpx",
 					"data/RK_gpx _2012-03-24_0955.gpx",
 					"data/RK_gpx _2012-03-31_0921.gpx",
-					"data/RK_gpx _2012-04-08_0905.gpx"];
+					"data/RK_gpx _2012-04-08_0905.gpx",
+					"data/RK_gpx _2012-05-06_0931.gpx"];
 			fullroute = [];
 			for (i = 0; i < gpxRoutes.length; i++) {
 				this.addRoute(gpxRoutes[i]);
