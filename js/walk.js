@@ -122,7 +122,7 @@ var o = {
 				[51.263216,-0.078143, 3, 'Caterham','visited'],
 				[51.313125,0.19666, 4, 'Otford','visited'],
 				[51.373836,0.462005, 5, 'Cuxton', 'visited'],
-				[51.265057,0.627851, 6, 'Hollingbourne', 'notvisited'],
+				[51.29429,0.571461, 6, 'Detling', 'visited'],
 				[51.185288,0.929246, 7, 'Wye', 'notvisited'],
 				[51.081397,1.169456, 8, 'Folkestone', 'notvisited'],
 				[51.126371,1.316198, 9, 'Dover', 'notvisited'],
