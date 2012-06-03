@@ -157,7 +157,8 @@ var o = {
 					"data/RK_gpx _2012-03-24_0955.gpx",
 					"data/RK_gpx _2012-03-31_0921.gpx",
 					"data/RK_gpx _2012-04-08_0905.gpx",
-					"data/RK_gpx _2012-05-06_0931.gpx"];
+					"data/RK_gpx _2012-05-06_0931.gpx",
+					"data/RK_gpx _2012-06-02_0947.gpx"];
 			fullroute = [];
 			for (i = 0; i < gpxRoutes.length; i++) {
 				this.addRoute(gpxRoutes[i]);
