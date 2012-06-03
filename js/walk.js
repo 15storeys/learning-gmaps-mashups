@@ -123,11 +123,12 @@ var o = {
 				[51.313125,0.19666, 4, 'Otford','visited'],
 				[51.373836,0.462005, 5, 'Cuxton', 'visited'],
 				[51.29429,0.571461, 6, 'Detling', 'visited'],
-				[51.185288,0.929246, 7, 'Wye', 'notvisited'],
-				[51.081397,1.169456, 8, 'Folkestone', 'notvisited'],
-				[51.126371,1.316198, 9, 'Dover', 'notvisited'],
-				[51.280233,1.078909, 10, 'Canterbury','notvisited'],
-				[51.186392,1.229855, 11, 'Shepherdswell','notvisited']
+				[51.213174,0.789814, 7, 'Charing', 'notvisited'],
+				[51.185288,0.929246, 8, 'Wye', 'notvisited'],
+				[51.081397,1.169456, 9, 'Folkestone', 'notvisited'],
+				[51.126371,1.316198, 10, 'Dover', 'notvisited'],
+				[51.280233,1.078909, 11, 'Canterbury','notvisited'],
+				[51.186392,1.229855, 12, 'Shepherdswell','notvisited']
 			];
 			
 
