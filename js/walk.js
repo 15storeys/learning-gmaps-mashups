@@ -3,7 +3,7 @@ var o = {
 	init: function(){
 		// in this place we call all needed functions
 		this.map.init();
-		this.northdowns.addDayMarkers();
+		this.northdowns.addDayMarkersFromFile(1); //need to get this routeid from the HTML as a parameter somehow
 		var route = this.northdowns.addRoutes();
 		$.when(route).then(
 		   // function(){ o.picasa.getAlbum('NorthDownsWay'); }
@@ -113,46 +113,45 @@ var o = {
 	},//end o.picasa 
 	
 	northdowns: {
-		addDayMarkers: function (){
-		
-			var dayMarkers = [
-				[51.211742,-0.79241, 0, 'Farnham', 'visited'],
-				[51.224528,-0.577244, 1, 'Guildford','visited'],
-				[51.248925,-0.324515, 2, 'Dorking','visited'],
-				[51.263216,-0.078143, 3, 'Caterham','visited'],
-				[51.313125,0.19666, 4, 'Otford','visited'],
-				[51.373836,0.462005, 5, 'Cuxton', 'visited'],
-				[51.29429,0.571461, 6, 'Detling', 'visited'],
-				[51.213174,0.789814, 7, 'Charing', 'visited'],
-				[51.185288,0.929246, 8, 'Wye', 'notvisited'],
-				[51.081397,1.169456, 9, 'Folkestone', 'notvisited'],
-				[51.126371,1.316198, 10, 'Dover', 'notvisited'],
-				[51.280233,1.078909, 11, 'Canterbury','notvisited'],
-				[51.186392,1.229855, 12, 'Shepherdswell','notvisited']
-			];
-			
+		addDayMarkersFromFile: function (routeid) {
+			$.ajax({
+			    type: "GET",
+			    url: "data/markers" + routeid + ".xml",
+			    dataType: "xml",
+			    success: this.addDayMarkersFromXML,
+			    error: function(xmlReq, status, errorMsg){
+				console.log("Error Message: "+ errorMsg);
+				console.log("Status: "+ status);
+				console.log(xmlReq.responseText);
 
-			for (i = 0; i < dayMarkers.length; i++) {
-				var dayMarker = dayMarkers [i]
-				var myLatlng = new google.maps.LatLng(dayMarker[0], dayMarker[1]);
+				throw(errorMsg);
+			    }
+  			}); 
+		}, // end o.northdowns.addDayMarkersFromFile		
+	
+		addDayMarkersFromXML: function(xml) {
+			$(xml).find("marker").each(function()
+			{
+				
+				var myLatlng = new google.maps.LatLng($(this).children('lat').text(), $(this).children('lng').text());
 				// red marker if visited, blue if yet to visit
-				if (dayMarker[4] == 'visited'){
+				
+				if ($(this).children('visited').text() == 'visited'){
 					var marker = new google.maps.Marker({
 						position: myLatlng, 
 						map: map, 
-						title: dayMarker[3]});	
+						title: $(this).children('label').text()});	
 				}
 				else {
 					var marker = new google.maps.Marker({
 						position: myLatlng, 
 						map: map, 
-						title: dayMarker[3],
+						title: $(this).children('label').text(),
 						icon: "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png"});	
 				}
-			} 
-			
-		}, // end o.northdowns.addDayMarkers
-		
+			});
+		},		
+
 		addRoutes: function() {
 			var gpxRoutes = ["data/RK_gpx _2011-11-26_1039.gpx",
 					"data/RK_gpx _2012-03-24_0955.gpx",
