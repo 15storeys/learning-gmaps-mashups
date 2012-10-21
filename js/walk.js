@@ -3,8 +3,8 @@ var o = {
 	init: function(){
 		// in this place we call all needed functions
 		this.map.init();
-		this.northdowns.addDayMarkersFromFile(1); //need to get this routeid from the HTML as a parameter somehow
-		var route = this.northdowns.addRoutes();
+		this.walk.addDayMarkersFromFile(1); //need to get this routeid from the HTML as a parameter somehow
+		var route = this.walk.addRoutes();
 		$.when(route).then(
 		   // function(){ o.picasa.getAlbum('NorthDownsWay'); }
 		);
@@ -112,7 +112,7 @@ var o = {
 		}
 	},//end o.picasa 
 	
-	northdowns: {
+	walk: {
 		addDayMarkersFromFile: function (routeid) {
 			$.ajax({
 			    type: "GET",
@@ -127,7 +127,7 @@ var o = {
 				throw(errorMsg);
 			    }
   			}); 
-		}, // end o.northdowns.addDayMarkersFromFile		
+		}, // end o.walk.addDayMarkersFromFile		
 	
 		addDayMarkersFromXML: function(xml) {
 			$(xml).find("marker").each(function()
@@ -182,7 +182,7 @@ var o = {
   			}); 
   			
 			
-		}, // end o.northdowns.addRoute
+		}, // end o.walk.addRoute
 		
 		plotRouteFromGpx: function(xml) {
 
@@ -207,9 +207,9 @@ var o = {
 			  });
 
 			  route.setMap(map);
-		} // end o.northdowns.plotRouteFromGpx
+		} // end o.walk.plotRouteFromGpx
 		
-	}  // end o.northdowns
+	}  // end o.walk
 	
 } // end o
 
