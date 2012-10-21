@@ -3,11 +3,6 @@ var o = {
 	init: function(){
 		// in this place we call all needed functions
 		this.map.init();
-		this.walk.addDayMarkersFromFile(1); //need to get this routeid from the HTML as a parameter somehow
-		var route = this.walk.addRoutes();
-		$.when(route).then(
-		   // function(){ o.picasa.getAlbum('NorthDownsWay'); }
-		);
 	}, // end o.init
 	
 	map: {
@@ -113,7 +108,15 @@ var o = {
 	},//end o.picasa 
 	
 	walk: {
-		addDayMarkersFromFile: function (routeid) {
+		displayWalk: function (routeid) {
+			this.addDayMarkers(routeid);
+			var route = this.addRoutes(routeid);
+			//$.when(route).then(
+			   // function(){ o.picasa.getAlbum('NorthDownsWay'); }
+			//);
+		}, // end o.walk.displayWalk
+
+		addDayMarkers: function (routeid) {
 			$.ajax({
 			    type: "GET",
 			    url: "data/" + routeid + "/markers.xml",
@@ -127,12 +130,11 @@ var o = {
 				throw(errorMsg);
 			    }
   			}); 
-		}, // end o.walk.addDayMarkersFromFile		
+		}, // end o.walk.addDayMarkers		
 	
 		addDayMarkersFromXML: function(xml) {
 			$(xml).find("marker").each(function()
-			{
-				
+			{		
 				var myLatlng = new google.maps.LatLng($(this).children('lat').text(), $(this).children('lng').text());
 				// red marker if visited, blue if yet to visit
 				
@@ -150,20 +152,18 @@ var o = {
 						icon: "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png"});	
 				}
 			});
-		},		
+		}, // end o.walk.addDayMarkersFromXML	
 
-		addRoutes: function() {
-			var gpxRoutes = ["data/1/RK_gpx _2011-11-26_1039.gpx",
-					"data/1/RK_gpx _2012-03-24_0955.gpx",
-					"data/1/RK_gpx _2012-03-31_0921.gpx",
-					"data/1/RK_gpx _2012-04-08_0905.gpx",
-					"data/1/RK_gpx _2012-05-06_0931.gpx",
-					"data/1/RK_gpx _2012-06-02_0947.gpx",
-					"data/1/RK_gpx _2012-06-05_0910.gpx"];
-			fullroute = [];
-			for (i = 0; i < gpxRoutes.length; i++) {
-				this.addRoute(gpxRoutes[i]);
-			}
+		addRoutes: function(routeid) 
+		{
+			$.getJSON("getroutes.php?routeid="+routeid, function(data) {
+				fullroute = [];
+				$(data).each(function()
+				{
+					o.walk.addRoute(this.filename);	
+				});
+			});
+			
 		},
 		
 		addRoute: function(filename) {
