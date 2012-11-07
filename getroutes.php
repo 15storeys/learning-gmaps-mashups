@@ -26,7 +26,7 @@
 		break;
 	    case 3:
 		$routes = array(
-			array('filename' => "data/3/TOCW2_Walk_14_Effingham_to_Westhumble.gpx")
+			array('filename' => "data/3/RK_gpx _2012-11-03_0926.gpx")
 			);
 		break;
 	    default:
