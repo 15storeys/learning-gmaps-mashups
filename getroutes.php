@@ -24,6 +24,11 @@
 			array('filename' => "data/2/RK_gpx _2011-08-27_0950.gpx")
 			);
 		break;
+	    case 3:
+		$routes = array(
+			array('filename' => "data/3/TOCW2_Walk_14_Effingham_to_Westhumble.gpx")
+			);
+		break;
 	    default:
 		break;
 	}
