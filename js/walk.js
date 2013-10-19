@@ -3,6 +3,7 @@ var o = {
 	init: function(){
 		// in this place we call all needed functions
 		this.map.init();
+		//this.picasa.getAlbum('NorthDownsWay');
 	}, // end o.init
 	
 	map: {
@@ -33,23 +34,26 @@ var o = {
 
 	picasa: {
 		 getAlbum: function(albumName) {
-			var albumUrl = 'https://picasaweb.google.com/data/feed/api/user/kris.coverdale@gmail.com/album/NorthDownsWay?imgmax=912&callback=?';
+			var albumUrl = 'https://picasaweb.google.com/data/feed/api/user/kris.coverdale@gmail.com/album/EffinghamJunctionToDorkingViaPolesdenLacey?imgmax=912&callback=?';
 			$.getJSON(albumUrl, function(data) {
 				
 				var photos = [];
+				var i = 1
 				$(data).find("entry").each(function()
 				{
 					var photo = [];
 					
 					// get image url
 					photo[0] = $(this).children('content').attr("src");
-					
+					console.log(photo[0]);
+					console.log(i);
+					i++;
 					//get timedate taken
 					photo[1] = $(this).children('gphoto\\:timestamp').html();
-				
+				    console.log(photo[1]);
 					// get caption
 					photo[2] = $(this).children('summary').html();
-					
+					console.log(photo[2]);
 					photos.push(photo);
 					//get thumbnail urls
 					//entry.media:group.thumbnail(s)
@@ -60,18 +64,40 @@ var o = {
 				for(i = 0; i < photos.length; i++)
 				{
 					var photo = photos[i];
+					var img = photo[0];
 					photoTime = photo[1];
-
-					photoTime = photoTime - 2000000 // TODO: camera time seems to be out.  Make this configurable later...
+					console.log('time from photo: ' + photoTime);
+					photoTime = photoTime - 7220000 /*2000000 */ // TODO: camera time seems to be out.  Make this configurable later...
 					
 					// look for photo time value in full route array
 					var latlong = [];
 					latlong = o.picasa.binarySearch(photoTime);
 					console.log('lat: ' + latlong[0]);
 					console.log('lon: ' + latlong[1]);
+					console.log('time: ' + photoTime);
+					var myLatlng = new google.maps.LatLng(latlong[0], latlong[1]);
+					marker = new google.maps.Marker({
+						/*icon: img,*/
+						icon: new google.maps.MarkerImage(img, null, null, null, new google.maps.Size(128, 128)),
+						position: myLatlng, 
+						map: map,
+						title: photo[2]
+						})
+					google.maps.event.addListener(marker, 'click', toggleBounce);
+						
+					console.log(i);
 				}
 				
 			});
+			
+			function toggleBounce() {
+				if (marker.getAnimation() != null) {
+					marker.setAnimation(null);
+				} 
+				else {
+					marker.setAnimation(google.maps.Animation.BOUNCE);
+				}
+			}
 			
 		}, // end o.picasa.getAlbum 
 		
@@ -111,9 +137,10 @@ var o = {
 		displayWalk: function (routeid) {
 			this.addDayMarkers(routeid);
 			var route = this.addRoutes(routeid);
-			//$.when(route).then(
-			   // function(){ o.picasa.getAlbum('NorthDownsWay'); }
-			//);
+			$.when(route).then(
+			   function(){ o.picasa.getAlbum('NorthDownsWay'); }
+			   //function() {alert ("route loaded");}
+			);
 		}, // end o.walk.displayWalk
 
 		addDayMarkers: function (routeid) {
