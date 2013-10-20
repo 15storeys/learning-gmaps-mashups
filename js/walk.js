@@ -83,7 +83,16 @@ var o = {
 						map: map,
 						title: photo[2]
 						})
-					google.maps.event.addListener(marker, 'click', toggleBounce);
+					google.maps.event.addListener(marker, 'click', function(){
+						// when marker is clicked, call our twitter.open
+						//alert(this.title);
+						if (this.getAnimation() != null) {
+							this.setAnimation(null);
+						} 
+						else {
+							this.setAnimation(google.maps.Animation.BOUNCE);
+						}
+					});// end of marker click listener
 						
 					console.log(i);
 				}
