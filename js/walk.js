@@ -77,37 +77,24 @@ var o = {
 					console.log('time: ' + photoTime);
 					var myLatlng = new google.maps.LatLng(latlong[0], latlong[1]);
 					marker = new google.maps.Marker({
-						/*icon: img,*/
-						icon: new google.maps.MarkerImage(img, null, null, null, new google.maps.Size(128, 128)),
+						icon: 'http://maps.google.com/mapfiles/kml/pal4/icon46.png',
+						/*icon: new google.maps.MarkerImage(img, null, null, null, new google.maps.Size(128, 128)),*/
 						position: myLatlng, 
 						map: map,
-						title: photo[2]
+						title: photo[2],
+						html: '<img src="' + img + '" />'
 						})
+					
 					google.maps.event.addListener(marker, 'click', function(){
-						// when marker is clicked, call our twitter.open
-						//alert(this.title);
-						if (this.getAnimation() != null) {
-							this.setAnimation(null);
-						} 
-						else {
-							this.setAnimation(google.maps.Animation.BOUNCE);
-						}
+						 var infowindow = new google.maps.InfoWindow({
+							  content: this.html /* html associated with the clicked marker */
+						  }); 
+						  infowindow.open(map,this);
 					});// end of marker click listener
 						
 					console.log(i);
 				}
-				
 			});
-			
-			function toggleBounce() {
-				if (marker.getAnimation() != null) {
-					marker.setAnimation(null);
-				} 
-				else {
-					marker.setAnimation(google.maps.Animation.BOUNCE);
-				}
-			}
-			
 		}, // end o.picasa.getAlbum 
 		
 		unixtime: function (timestamp) {
